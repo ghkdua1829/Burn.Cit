@@ -1,4 +1,4 @@
-package com.fastcampus.burncit.ui
+package com.fastcampus.burncit.ui.exercise
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
