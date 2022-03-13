@@ -1,6 +1,7 @@
 package com.fastcampus.burncit.feature.calendar
 
 import android.app.ActionBar
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -27,7 +28,7 @@ class CalendarAdapter : RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder>
         val dayFormat = SimpleDateFormat("dd", Locale.getDefault())
     }
 
-    fun setCalendarData(startDate: Calendar, backBtnWidth: Int) {
+    fun setCalendarData(startDate: Calendar) {
         with(calendarData) {
             clear()
         }
@@ -43,25 +44,22 @@ class CalendarAdapter : RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder>
             startDate.add(Calendar.DATE, 1)
 
         }
-        sizeBack = backBtnWidth
-
-
         notifyDataSetChanged()
     }
 
     fun setWidth(backBtnWidth: Int) {
-//        sizeBack = backBtnWidth
-//        notifyDataSetChanged()
-//        binding.itemCalConst.layoutParams = RecyclerView.LayoutParams(
-//            (widthPixels- 2 *backBtnWidth) / 7,
-//            ActionBar.LayoutParams.WRAP_CONTENT
-//        )
+        sizeBack = backBtnWidth
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarViewHolder {
         binding =
             ItemCalendarDateBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         widthPixels = parent.context.resources.displayMetrics.widthPixels
+        binding.itemCalConst.layoutParams = RecyclerView.LayoutParams(
+            (widthPixels - 2 * sizeBack) / 7,
+            ActionBar.LayoutParams.WRAP_CONTENT
+        )
         return CalendarViewHolder(binding)
     }
 
@@ -71,6 +69,7 @@ class CalendarAdapter : RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder>
             (widthPixels - 2 * sizeBack) / 7,
             ActionBar.LayoutParams.WRAP_CONTENT
         )
+        Log.e("!!",binding.itemCalConst.layoutParams.width.toString()+","+position.toString()+","+(widthPixels - 2 * sizeBack) / 7+","+sizeBack)
     }
 
     override fun getItemCount(): Int {
